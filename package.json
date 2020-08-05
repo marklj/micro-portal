@@ -2,7 +2,7 @@
   "main": "src/main.js",
   "scripts": {
     "app:start": "npm-run-all --parallel start:*",
-    "app:install": "npm-run-all --serial install:*",
+    "app:install": "yarn && npm-run-all --serial install:*",
     "start:container": "webpack-dev-server",
     "install:container": "yarn",
     "start:dashboard": "cd src/dashboard && yarn start",
