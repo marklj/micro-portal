@@ -1,0 +1,42 @@
+{
+  "main": "src/main.js",
+  "scripts": {
+    "app:start": "npm-run-all --parallel start:*",
+    "app:install": "npm-run-all --serial install:*",
+    "start:container": "webpack-dev-server",
+    "install:container": "yarn",
+    "start:dashboard": "cd src/dashboard && yarn start",
+    "install:dashboard": "cd src/dashboard && yarn",
+    "start:person": "cd src/person && yarn start",
+    "install:person": "cd src/person && yarn",
+    "start:reports": "cd src/reports && yarn serve:spa",
+    "install:reports": "cd src/reports && yarn",
+    "start:assets": "cd src/assets && yarn serve",
+    "install:assets": "cd src/assets && yarn",
+    "start:vehicles": "cd src/vehicles && yarn start",
+    "install:vehicles": "cd src/vehicles && yarn",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-transform-react-jsx": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/runtime": "^7.11.2",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "less-loader": "^6.2.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.23.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "http-server": "^0.12.3",
+    "qiankun": "^2.0.17",
+    "zone.js": "^0.10.3"
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Portal Index</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+  <div class="container mx-auto bg-white shadow p-4">
+    <header class="mainapp-header">
+      <h1 class="text-2xl font-bold">Web Portal</h1>
+    </header>
+    <div class="mainapp-main flex">
+      <ul class="mt-6 w-64">
+        <li id="nav-dashboard" onclick="push('/dashboard')" class="text-blue-500 underline cursor-pointer">Dashboard</li>
+        <li id="nav-person" onclick="push('/person')" class="text-blue-500 underline cursor-pointer">Person</li>
+        <li id="nav-reports" onclick="push('/reports')" class="text-blue-500 underline cursor-pointer">Reports</li>
+        <li id="nav-assets" onclick="push('/assets')" class="text-blue-500 underline cursor-pointer">Assets</li>
+        <li id="nav-vehicles" onclick="push('/vehicles')" class="text-blue-500 underline cursor-pointer">Vehicles</li>
+      </ul>
+      <main id="subapp-container self-start">
+          <div id="subapp-viewport"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="container mx-auto">
+    <div class="w-64 p-4 bg-gray-200 rounded mt-4">
+        <h3 class="text-xl font-bold mb-1">Enabled Apps</h3>
+        <aside class="text-xs text-gray-800 mb-2">Toggle specific applications that the user has access to:</aside>
+        <ul class="text-sm rounded">
+            <li class="mb-1 rounded bg-white px-2 py-1"><label><input id="enable-person" class="mr-1" type="checkbox" onclick="toggleAppPermissions('person')">Person</label></li>
+            <li class="mb-1 rounded bg-white px-2 py-1"><label><input id="enable-reports" class="mr-1" type="checkbox" onclick="toggleAppPermissions('reports')">Reports</label></li>
+            <li class="mb-1 rounded bg-white px-2 py-1"><label><input id="enable-assets" class="mr-1" type="checkbox" onclick="toggleAppPermissions('assets')">Assets</label></li>
+            <li class="mb-1 rounded bg-white px-2 py-1"><label><input id="enable-vehicles" class="mr-1" type="checkbox" onclick="toggleAppPermissions('vehicles')">Vehicles</label></li>
+        </ul>
+    </div>
+  </div>
+
+  <script>
+    if(location.href.indexOf('/dashboard') === -1) location.href = '/dashboard';
+    var k = 'portal.enabledApps';
+    var allApps = ['person', 'reports', 'assets', 'vehicles'];
+    var enabledApps = [];
+    if(!window.localStorage.getItem(k)) {
+        window.localStorage.setItem(k, JSON.stringify(allApps));
+        enabledApps = allApps;
+    } else {
+        enabledApps = JSON.parse(window.localStorage.getItem(k));
+    }
+
+    if(!enabledApps.find(app => app === 'person')) document.getElementById('nav-person').classList.add("hidden");
+    if(!enabledApps.find(app => app === 'reports')) document.getElementById('nav-reports').classList.add("hidden");
+    if(!enabledApps.find(app => app === 'assets')) document.getElementById('nav-assets').classList.add("hidden");
+    if(!enabledApps.find(app => app === 'vehicles')) document.getElementById('nav-vehicles').classList.add("hidden");
+
+    document.getElementById('enable-person').checked = !!enabledApps.find(app => app === 'person')
+    document.getElementById('enable-reports').checked = !!enabledApps.find(app => app === 'reports')
+    document.getElementById('enable-assets').checked = !!enabledApps.find(app => app === 'assets')
+    document.getElementById('enable-vehicles').checked = !!enabledApps.find(app => app === 'vehicles')
+
+    console.log(enabledApps)
+
+    function push(subapp) { history.pushState(null, subapp, subapp) }
+    function toggleAppPermissions(appStr) {
+        if(enabledApps.find(item => item === appStr)) {
+            var i = enabledApps.findIndex(item => item === appStr)
+            enabledApps.splice(i, 1);
+        } else {
+            enabledApps.push(appStr);
+        }
+        window.localStorage.setItem(k, JSON.stringify(enabledApps));
+        location.reload();
+    }
+  </script>
+</body>
+
+</html>
